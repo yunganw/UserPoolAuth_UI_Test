@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head><head>
+    <link href="https://d3oia8etllorh5.cloudfront.net/20180912132350/css/bootstrap.min.css" rel="stylesheet"
+        media="screen" />
+    <link href="https://d3oia8etllorh5.cloudfront.net/20180912132350/css/cognito-login.css" rel="stylesheet"
+        media="screen" />
+    
+    <title>Signin</title>
+
+    <script src="https://d3oia8etllorh5.cloudfront.net/20180912132350/js/amazon-cognito-advanced-security-data.min.js" ></script>
+    <script>
+    function getAdvancedSecurityData(formReference) {
+        if (typeof AmazonCognitoAdvancedSecurityData === "undefined") {
+            return true;
+        }
+
+        // UserpoolId is not available on frontend for springboard. We do not use userPoolId
+        // anyway other than put in context data. 
+        var userPoolId = "";
+        var clientId = getUrlParameter("client_id");
+
+        var username = "";
+        var usernameInput = document.getElementsByName("username")[0];
+        if (usernameInput && usernameInput.value) {
+            username = usernameInput.value;
+        }
+
+        var asfData = AmazonCognitoAdvancedSecurityData.getData(username, userPoolId, clientId);
+        if (typeof asfData === "undefined") {
+            return true;
+        }
+
+        if (formReference && formReference.cognitoAsfData) {
+            formReference.cognitoAsfData.value = asfData
+        }
+
+        return true;
+    }
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head></head>
+<body>
+    <div class="container">
+        <div class="modal-dialog">
+            <div class="modal-content background-customizable modal-content-mobile visible-xs visible-sm">
+                <div class="modal-body">
+                    <div>
+                        <div><div>
+    <div>           
+            <button name="googleSignUpButton"
+                    onclick="https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://google.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=aws.cognito.signin.user.admin openid email profile&#39;"
+                   >
+            </button>
+        
+        <br/>
+    </div>
+</div></div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="modal-content background-customizable modal-content-mobile visible-md visible-lg">
+                <div class="modal-body">
+      
+                    <div>
+                        <div>
+                                <div><div>
+    <div>
+        <span class="idpDescription-customizable">Sign In with your social account</span>
+        
+            
+            
+            <button name="googleSignUpButton"
+                    onclick="https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://google.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=aws.cognito.signin.user.admin openid email profile&#39;"
+                    >
+                
+            </button>
+        
+        <br/>
+    </div>
+</div></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://d3oia8etllorh5.cloudfront.net/20180912132350/js/jquery-3.2.1.min.js" ></script>
+    <script>
+    var $inputs = $(":input");
+    $inputs.on('input',function() {
+        $('input[name="' + this.name + '"]').val($(this).val());
+    });
+</script>
+</body>
+
+</html>
