@@ -80,28 +80,24 @@
             var start_idx = data.indexOf (searching_str)+searching_str.length;
             var end_idx = data.substr(start_idx, 50).indexOf('"');
             csrf = data.substr(start_idx, end_idx);
+            console.log ("setting csrf -> " + csrf);
+            $('#_csrf').val(csrf);
                 
-        });
+        });        
 
-        $.post( base_url+'/login?response_type', { username: "solariswu", password: "963717", _csrf: csrf} );
-        
-        $.ajax({
-            url: base_url+'login?response_type=token&client_id=7nca7db89qqeddmt2rh90587c5&redirect_uri=https://google.com&state=STATE&scope=openid',
-            type: 'post',
-            data: {
-                username: "solariswu", //uid,
-                password: "963717",  //pwd,
-                _csrf: csrf
-            },
-            headers: {
-                Cookie: csrf+'; Path=/; Secure; HttpOnly'
-            },
-            //dataType: 'json',
-            success: function (data2) {
-                alert(data2);
-            }
-        });
-
+            $.ajax({
+                url: base_url+'/login?response_type=token&client_id=7nca7db89qqeddmt2rh90587c5&redirect_uri=https://google.com&state=STATE&scope=openid',
+                type: 'post',
+                data: {
+                    username: "solariswu", //uid,
+                    password: "963717",  //pwd,
+                    _csrf: csrf
+                },
+                //dataType: 'json',
+                success: function (data2) {
+                    alert(data2);
+                }
+            });
     }
 
 </script>
@@ -127,10 +123,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!--form action="https://github.yungangwu.myinstance.com/login?response_type=token&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;redirect_uri=https://google.com&amp;state=STATE&amp;scope=openid" method="POST" name="cognitoSignInForm"
-                          class="cognito-asf" onsubmit="getAdvancedSecurityData(this);"-->
-                    <form action="">
-                        <input type="hidden" name="_csrf" value="cbb3a556-f928-4c8f-b738-51e17c359762"/>           <div class="input-group form-group">
+<!--
+                    <form action="https://github.yungangwu.myinstance.com/login?response_type=token&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;redirect_uri=https://google.com&amp;state=STATE&amp;scope=openid" method="POST" name="cognitoSignInForm"
+                          class="cognito-asf" onsubmit="submitMe();getAdvancedSecurityData(this);">
+-->
+                    <form>
+                        <input type="hidden" name="_csrf" value=""/>
+                        <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
@@ -148,8 +147,8 @@
                             <input type="checkbox">Remember this Device
                         </div>
                         <div class="form-group">
-                            <!--input type="submit" value="Login" class="btn float-right login_btn"-->
-                            <button class="btn float-right login_btn" onclick="submitMe()">Login</button>
+                            <button class="btn float-right login_btn" onclick="submitMe();">Login</button>
+<!--                            <input type="submit" value="Login" class="btn float-right login_btn">-->
                         </div>
                     </form>
                 </div>
