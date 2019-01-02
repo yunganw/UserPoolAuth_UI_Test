@@ -5,13 +5,14 @@
    <!--Bootsrap template - Made with love by Mutiullah Samim -->
    
     <!--JQuery CDN-->
-    <!--script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script-->
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>    
+    
+    <!--tooltips dependancy-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 	<!--Bootsrap 4 CDN-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -63,6 +64,46 @@
         var results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
+        
+    function submitMe () {
+        var uid = $('#username').val();
+        var pwd = $('#password').val();
+            
+        const base_url = 'https://github.yungangwu.myinstance.com';
+        
+        const searching_str = 'name="_csrf" value="';
+        
+        var csrf = "";
+
+        $.get( base_url+'/oauth2/authorize', { response_type: "token", client_id: "7nca7db89qqeddmt2rh90587c5", redirect_uri : "https://google.com",state: "STATE",scope: "openid" } )
+        .done(function( data ) {
+            var start_idx = data.indexOf (searching_str)+searching_str.length;
+            var end_idx = data.substr(start_idx, 50).indexOf('"');
+            csrf = data.substr(start_idx, end_idx);
+                
+        });
+
+        $.post( base_url+'/login?response_type', { username: "solariswu", password: "963717", _csrf: csrf} );
+        
+        $.ajax({
+            url: base_url+'login?response_type=token&client_id=7nca7db89qqeddmt2rh90587c5&redirect_uri=https://google.com&state=STATE&scope=openid',
+            type: 'post',
+            data: {
+                username: "solariswu", //uid,
+                password: "963717",  //pwd,
+                _csrf: csrf
+            },
+            headers: {
+                Cookie: csrf+'; Path=/; Secure; HttpOnly'
+            },
+            //dataType: 'json',
+            success: function (data2) {
+                alert(data2);
+            }
+        });
+
+    }
+
 </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,18 +115,21 @@
                 <div class="card-header">
                     <h3>Sign In</h3>
                     <div class="d-flex justify-content-end social_icon">
-                        <span ><i name="googleSignUpButton"
-                                 onclick="window.location.href=&#39;https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://google.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid&#39;"
+                        <!--redirect to Google Oauth SSO-->
+                        <span ><i name="googleSignUpButton" data-toggle="tooltip" title="SignIn With Google" 
+                                onclick="window.location.href=&#39;https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://google.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid&#39;"
                             class="fab fa-google-plus-square"></i>
                             <!--span class="tooltiptext">Sign-in with Google</span--></span>
+                        <!--Not implemented in this demo, but easy to set up by referring above-->
                         <span><i data-toggle="tooltip" title="Not implemented!" class="fab fa-openid"></i></span>
                         <span><i data-toggle="tooltip" title="Not implemented!" class="fab fa-facebook-square"></i></span>
                         <span><i data-toggle="tooltip" title="Not implemented!" class="fab fa-amazon"></i></span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="https://github.yungangwu.myinstance.com/login?response_type=token&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;redirect_uri=https://google.com&amp;state=STATE&amp;scope=openid" method="POST" name="cognitoSignInForm"
-                          class="cognito-asf" onsubmit="getAdvancedSecurityData(this);">
+                    <!--form action="https://github.yungangwu.myinstance.com/login?response_type=token&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;redirect_uri=https://google.com&amp;state=STATE&amp;scope=openid" method="POST" name="cognitoSignInForm"
+                          class="cognito-asf" onsubmit="getAdvancedSecurityData(this);"-->
+                    <form action="">
                         <input type="hidden" name="_csrf" value="cbb3a556-f928-4c8f-b738-51e17c359762"/>           <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -104,7 +148,8 @@
                             <input type="checkbox">Remember this Device
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                            <!--input type="submit" value="Login" class="btn float-right login_btn"-->
+                            <button class="btn float-right login_btn" onclick="submitMe()">Login</button>
                         </div>
                     </form>
                 </div>
@@ -122,7 +167,6 @@
     <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
-        $.cookie("XSRF-TOKEN", "cbb3a556-f928-4c8f-b738-51e17c359762", { path : '/'} );
     });
     var $inputs = $(":input");
     $inputs.on('input',function() {
