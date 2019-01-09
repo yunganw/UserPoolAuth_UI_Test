@@ -92,14 +92,17 @@
                 console.log ('obj:', JSON.stringify(obj));
                 document.getElementById("profileUserName").innerHTML = obj.username;
                 document.getElementsByName('email')[0].placeholder=obj.email;
+                document.getElementById("content").style.display = "block";
             }
             else {
+                document.getElementById("content").style.display = "block";
                 document.getElementById("content").innerHTML="<h2>Error, please contact Application Admin</h2>";
             }
         };
         
         xmlhttp.onerror = function(e) {
             console.log ('status: ' + this.status);
+            document.getElementById("content").style.display = "block";
             document.getElementById("content").innerHTML="<h2>Error, please contact Application Admin</h2>";
         };
         
@@ -110,7 +113,7 @@
     </script>
 
 <hr>
-<div class="container bootstrap snippet" id='content'>
+<div class="container bootstrap snippet" id='content' style="display:hidden;">
     <div class="row">
   		<div class="col-sm-10"><h1 id='profileUserName'>User name</h1></div>
     	<div class="col-sm-2"><a href="#" class="pull-right"><img title="profile image" class="img-responsive" src="AWS_logo_RGB.png"></a></div>
