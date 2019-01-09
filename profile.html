@@ -94,7 +94,7 @@
                 document.getElementById("results").innerHTML=xmlhttp.responseText;
                 var obj = JSON.parse(xmlhttp.responseText);
                 console.log ('obj:', JSON.stringify(obj));
-                $('profileUserName').innerHTML=obj.username;
+                $('#profileUserName').innerHTML=obj.username;
             }
         };
         
