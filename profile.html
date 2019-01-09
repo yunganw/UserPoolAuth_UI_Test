@@ -65,6 +65,9 @@
     });
 
     function getAccessToken () {
+        if (!window.location.hash) {
+            return "";
+        }
         var access_token = "" + window.location.hash.match(/access_token\=(.*?)(&|$)/)[1]; 
         return access_token;
     }
@@ -77,6 +80,11 @@
         xmlhttp.open("GET", uri+path);
         access_token = getAccessToken();
 
+        if ("" == access_token) {
+            document.getElementById("content").innerHTML="<h2>Error, please contact Application Admin</h2>";
+            return;           
+        }
+
         xmlhttp.setRequestHeader("Authorization", "Bearer "+access_token);
         
         xmlhttp.onload = function(e) {
@@ -84,12 +92,15 @@
  
             if (this.status == 200) {
                 document.getElementById("results").innerHTML=xmlhttp.responseText;
+                var obj = JSON.parse(xmlhttp.responseText);
+                console.log ('obj:', JSON.stringify(obj));
+                $('profileUserName').innerHTML=obj.username;
             }
         };
         
         xmlhttp.onerror = function(e) {
             console.log ('status: ' + this.status);
-            document.getElementById("results").innerHTML="<h2>Error, please contact Application Admin</h2>";
+            document.getElementById("content").innerHTML="<h2>Error, please contact Application Admin</h2>";
         };
         
         xmlhttp.send(null);
@@ -101,10 +112,10 @@
 
 </div>
 <hr>
-<div class="container bootstrap snippet">
+<div class="container bootstrap snippet" id='content'>
     <div class="row">
-  		<div class="col-sm-10"><h1>User name</h1></div>
-    	<div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
+  		<div class="col-sm-10"><h1 id='profileUserName'>User name</h1></div>
+    	<div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="https://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>
     </div>
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
