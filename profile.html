@@ -76,7 +76,7 @@
         xmlhttp.open("GET", uri+path);
         access_token = getAccessToken();
 
-        xmlhttp.setRequestHeader("Authorization", "Bear "+access_token);
+        xmlhttp.setRequestHeader("Authorization", "Bearer "+access_token);
         
         xmlhttp.onload = function(e) {
             console.log ('get user response:' + this.status);
