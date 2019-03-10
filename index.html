@@ -32,6 +32,12 @@
     <!--Cognito Advanced Security Js data, suggests to keep-->
     <script src="https://d3oia8etllorh5.cloudfront.net/20180912132350/js/amazon-cognito-advanced-security-data.min.js" ></script>
     <script>
+
+    var myDomain = 'https://upauthtest.yungangwu.myinstance.com';
+    var cognitoUserPoolDomain = 'https://github.yungangwu.myinstance.com';
+    var profilePagePath = myDomain + '/profile.html';
+    var userPoolClientId = '7nca7db89qqeddmt2rh90587c5';
+
     function getAdvancedSecurityData(formReference) {
         if (typeof AmazonCognitoAdvancedSecurityData === "undefined") {
             return true;
@@ -93,9 +99,9 @@
 
     };
 
-    function redirectToCognitoAuthEndpoint () {
-//        window.location.href='&#39;https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://upauthtest.yungangwu.myinstance.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid&#39;'
-        window.location.href='https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&redirect_uri=https://upauthtest.yungangwu.myinstance.com/profile.html&response_type=TOKEN&client_id=7nca7db89qqeddmt2rh90587c5&state=STATE&scope=openid';
+    function redirectGoogleFedAuth () {
+        window.location.href=cognitoUserPoolDomain+'/oauth2/authorize?identity_provider=Google&redirect_uri='
+        +profilePagePath+'&response_type=TOKEN&client_id='+userPoolClientId+'&state=STATE&scope=openid';
     }
 
 </script>
@@ -111,7 +117,7 @@
                     <div class="d-flex justify-content-end social_icon">
                         <!--redirect to Google Oauth SSO-->
                         <span ><i name="googleSignUpButton" data-toggle="tooltip" title="SignIn With Google" 
-                                onclick="redirectToCognitoAuthEndpoint();"
+                                onclick="redirectGoogleFedAuth();"
                             class="fab fa-google-plus-square"></i>
                             <!--span class="tooltiptext">Sign-in with Google</span--></span>
                         <!--Not implemented in this demo, but easy to set up by referring above-->
