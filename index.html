@@ -37,6 +37,7 @@
     var cognitoUserPoolDomain = 'https://github.yungangwu.myinstance.com';
     var profilePagePath = myDomain + '/profile.html';
     var userPoolClientId = '7nca7db89qqeddmt2rh90587c5';
+    var authScope = 'openid+aws.cognito.signin.user.admin';
 
     function getAdvancedSecurityData(formReference) {
         if (typeof AmazonCognitoAdvancedSecurityData === "undefined") {
@@ -101,7 +102,7 @@
 
     function redirectGoogleFedAuth () {
         window.location.href=cognitoUserPoolDomain+'/oauth2/authorize?identity_provider=Google&redirect_uri='
-        +profilePagePath+'&response_type=TOKEN&client_id='+userPoolClientId+'&state=STATE&scope=openid';
+        +profilePagePath+'&response_type=TOKEN&client_id='+userPoolClientId+'&state=STATE&scope='+authScope;
     }
 
 </script>
