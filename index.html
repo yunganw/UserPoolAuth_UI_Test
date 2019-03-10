@@ -93,6 +93,11 @@
 
     };
 
+    function redirectToCognitoAuthEndpoint () {
+//        window.location.href='&#39;https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://upauthtest.yungangwu.myinstance.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid&#39;'
+        window.location.href='https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://upauthtest.yungangwu.myinstance.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid';
+    }
+
 </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,7 +111,7 @@
                     <div class="d-flex justify-content-end social_icon">
                         <!--redirect to Google Oauth SSO-->
                         <span ><i name="googleSignUpButton" data-toggle="tooltip" title="SignIn With Google" 
-                                onclick="window.location.href='&#39;https://github.yungangwu.myinstance.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://upauthtest.yungangwu.myinstance.com&amp;response_type=TOKEN&amp;client_id=7nca7db89qqeddmt2rh90587c5&amp;state=STATE&amp;scope=openid&#39;'"
+                                onclick="redirectToCognitoAuthEndpoint();"
                             class="fab fa-google-plus-square"></i>
                             <!--span class="tooltiptext">Sign-in with Google</span--></span>
                         <!--Not implemented in this demo, but easy to set up by referring above-->
