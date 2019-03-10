@@ -75,8 +75,8 @@
 
     function loginMe() {
 
-        var uid = $('#username').val();
-        var pwd = $('#password').val();
+        var uid = document.getElementsByName("username")[0].value;
+        var pwd = document.getElementsByName("password")[0].value;
 
         console.log ("username: "+uid);
             
